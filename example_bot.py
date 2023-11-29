@@ -32,6 +32,10 @@ async def on_message(message):
     if message.content.startswith('El bot'):
         await message.channel.send('Si soy!')
 
+@client.event
+async def print_message(event):
+    print(event.content)
+
 # @client.event
 # async def on_message(message):
 #     if message.author == client.user:
@@ -41,8 +45,9 @@ async def on_message(message):
 #         await fetch_scheduled_events(*, with_counts=True)
 
 @client.event
-async def on_scheduled_event_create(event):
-    await event.channel.send('An event was just created!')
+async def on_scheduled_event_created(event):
+    await discord.on_scheduled_event_create(event)
+    await event.channel.send(f'An event was just created by ${event.creator}!')
 
 
 client.run(os.getenv('DISCORD_BOT_TOKEN'))
