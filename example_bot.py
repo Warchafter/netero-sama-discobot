@@ -56,7 +56,7 @@ async def on_member_join(self, member):
 async def on_scheduled_event_create(event):
     print("an event was created")
     channel = bot.get_channel(525353169178329119)
-    await channel.send(f'An event was just created by ${event.creator}!')
+    await channel.send(f'An event was just created by {event.creator}!')
 
 
 bot.run(os.getenv('DISCORD_BOT_TOKEN'))
