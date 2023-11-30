@@ -33,9 +33,17 @@ async def on_message(message):
     if message.content.startswith('El bot'):
         await message.channel.send('Si soy!')
 
-@bot.event
-async def print_message(event):
-    print(event.content)
+# @bot.event
+# async def on_message(message):
+#     if message.author == bot.user:
+#         return
+
+#     if message.content.startswith('test1'):
+#             await ctx.send(f"The icon url is: {icon_url}")
+
+async def get_server_icon_url(self, ctx):
+    return ctx.guild.icon.url
+
 
 # @bot.event
 # async def on_message(message):
@@ -56,7 +64,14 @@ async def on_member_join(self, member):
 async def on_scheduled_event_create(event):
     print("an event was created")
     channel = bot.get_channel(525353169178329119)
-    await channel.send(f'An event was just created by {event.creator}!')
+    embed = discord.Embed(
+        colour=discord.Colour.blurple(),
+        description=f'An event was just created by {event.creator}!',
+        title="New Event!"
+    )
+    embed.set_thumbnail(url=event.cover_image)
+    embed.set_image(url=event.cover_image)
+    await channel.send(embed=embed)
 
 
 bot.run(os.getenv('DISCORD_BOT_TOKEN'))
