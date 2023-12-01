@@ -96,7 +96,9 @@ async def on_scheduled_event_update(before, after):
     else:
         locationChann = before.channel.name
     if before.start_time != after.start_time:
-        timeFormat = f"~~{before.start_time}~~ ***{after.start_time}***"
+        bT = before.start_time.strftime("%A %d. %H:%M")
+        aT = after.start_time.strftime("%A %d. %H:%M")
+        timeFormat = f"~~{bT}~~ ***{aT}***"
     else:
         timeFormat = before.start_time
     if before.description != after.description:
@@ -112,7 +114,7 @@ async def on_scheduled_event_update(before, after):
     )
     embed.add_field(name="Created By", value=after.creator.global_name, inline="true")
     embed.add_field(name="Location", value=locationChann, inline="true")
-    embed.add_field(name="Time", value=timeFormat.strftime("%A %d. %H:%M"), inline="true")
+    embed.add_field(name="Time", value=timeFormat, inline="true")
     embed.set_thumbnail(url=after.guild.icon.url)
     embed.set_image(url=after.cover_image)
     embed.timestamp = datetime.datetime.utcnow()
