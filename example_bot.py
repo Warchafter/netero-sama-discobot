@@ -1,5 +1,6 @@
 import discord
 import os
+import datetime
 # import logging
 from dotenv import load_dotenv
 
@@ -63,19 +64,20 @@ async def on_member_join(self, member):
 @bot.event
 async def on_scheduled_event_create(event):
     print("an event was created")
-    channel = bot.get_channel(525353169178329119)
-    s1 = "| Created By | Location | Games | /n"
-    s2 = "| -------- | ------- | ------- | /n"
-    s3 = "| " + {event.creator} + " | " + {event.channel} + " | |/n"
-    s4 = f" Join [here]{event.url}"
+    channel = bot.get_channel(1180161923120119840)
     embed = discord.Embed(
         colour=discord.Colour.blurple(),
-        # description=f'An event was just created by {event.creator}!',
-        description= s1 + s2 + s3 + s4,
+        description= f"{event.description} \n -> Join [here]({event.url})",
         title="New Event!"
     )
+    timeFormat = event.start_time
+    embed.add_field(name="Created By", value=event.creator.global_name, inline="true")
+    embed.add_field(name="Location", value=event.channel.name, inline="true")
+    embed.add_field(name="Time", value=timeFormat.strftime("%A %d. %H:%M"), inline="true")
     embed.set_thumbnail(url=event.cover_image)
     embed.set_image(url=event.cover_image)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text = '\u200b', icon_url = "https://www.pngall.com/wp-content/uploads/5/Video-Game-Controller.png")
     await channel.send(embed=embed)
 
 
