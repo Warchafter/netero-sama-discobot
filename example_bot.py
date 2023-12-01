@@ -82,4 +82,42 @@ async def on_scheduled_event_create(event):
     await channel.send(embed=embed)
 
 
+@bot.event
+async def on_scheduled_event_update(before, after):
+    print("an event was updated")
+    channel = bot.get_channel(525353169178329119)
+    # channel = bot.get_channel(1180161923120119840)
+    event_desc = before.description
+    timeFormat = before.start_time
+    locationChann = before.channel.name
+
+    if before.channel.name != after.channel.name:
+        locationChann = f"~~{before.channel.name}~~ ***{after.channel.name}***"
+    else:
+        locationChann = before.channel.name
+    if before.start_time != after.start_time:
+        timeFormat = f"~~{before.start_time}~~ ***{after.start_time}***"
+    else:
+        timeFormat = before.start_time
+    if before.description != after.description:
+        event_desc = f"~~{before.description}~~ ***{after.description}***"
+    else:
+        event_desc = before.description
+
+
+
+    embed = discord.Embed(
+        colour=discord.Colour.dark_blue,
+        description=f"{event_desc} \n -> {after.guild.default_role.mention}, join [here]({after.url})",
+    )
+    embed.add_field(name="Created By", value=after.creator.global_name, inline="true")
+    embed.add_field(name="Location", value=locationChann, inline="true")
+    embed.add_field(name="Time", value=timeFormat.strftime("%A %d. %H:%M"), inline="true")
+    embed.set_thumbnail(url=after.guild.icon.url)
+    embed.set_image(url=after.cover_image)
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.set_footer(text = 'The event has been updated \n \u200b', icon_url = "https://www.pngall.com/wp-content/uploads/5/Video-Game-Controller.png")
+    await channel.send(embed=embed)
+
+
 bot.run(os.getenv('DISCORD_BOT_TOKEN'))
