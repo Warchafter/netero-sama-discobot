@@ -64,9 +64,14 @@ async def on_member_join(self, member):
 async def on_scheduled_event_create(event):
     print("an event was created")
     channel = bot.get_channel(525353169178329119)
+    s1 = "| Created By | Location | Games | /n"
+    s2 = "| -------- | ------- | ------- | /n"
+    s3 = "| " + {event.creator} + " | " + {event.channel} + " | |/n"
+    s4 = f" Join [here]{event.url}"
     embed = discord.Embed(
         colour=discord.Colour.blurple(),
-        description=f'An event was just created by {event.creator}!',
+        # description=f'An event was just created by {event.creator}!',
+        description= s1 + s2 + s3 + s4,
         title="New Event!"
     )
     embed.set_thumbnail(url=event.cover_image)
