@@ -65,16 +65,17 @@ async def on_member_join(self, member):
 async def on_scheduled_event_create(event):
     print("an event was created")
     channel = bot.get_channel(525353169178329119)
+    # channel = bot.get_channel(1180161923120119840)
     embed = discord.Embed(
         colour=discord.Colour.blurple(),
-        description= f"{event.description} \n -> Join [here]({event.url})",
+        description= f"{event.description} \n -> {event.guild.default_role.mention}, join [here]({event.url})",
         title="New Event!"
     )
     timeFormat = event.start_time
     embed.add_field(name="Created By", value=event.creator.global_name, inline="true")
     embed.add_field(name="Location", value=event.channel.name, inline="true")
     embed.add_field(name="Time", value=timeFormat.strftime("%A %d. %H:%M"), inline="true")
-    embed.set_thumbnail(url=event.cover_image)
+    embed.set_thumbnail(url=event.guild.icon.url)
     embed.set_image(url=event.cover_image)
     embed.timestamp = datetime.datetime.utcnow()
     embed.set_footer(text = '\u200b', icon_url = "https://www.pngall.com/wp-content/uploads/5/Video-Game-Controller.png")
