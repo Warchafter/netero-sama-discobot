@@ -107,7 +107,7 @@ async def on_scheduled_event_update(before, after):
 
 
     embed = discord.Embed(
-        colour=discord.Colour.dark_blue,
+        colour=discord.Colour.blurple(),
         description=f"{event_desc} \n -> {after.guild.default_role.mention}, join [here]({after.url})",
     )
     embed.add_field(name="Created By", value=after.creator.global_name, inline="true")
