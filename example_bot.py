@@ -64,7 +64,7 @@ async def on_member_join(self, member):
 @bot.event
 async def on_scheduled_event_create(event):
     print("an event was created")
-    channel = bot.get_channel(1180161923120119840)
+    channel = bot.get_channel(525353169178329119)
     embed = discord.Embed(
         colour=discord.Colour.blurple(),
         description= f"{event.description} \n -> Join [here]({event.url})",
